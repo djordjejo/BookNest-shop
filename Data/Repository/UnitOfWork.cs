@@ -1,4 +1,5 @@
 ﻿using Data.Repository.IRepository;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Models;
 using System;
 using System.Collections.Generic;
@@ -8,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace Data.Repository
 {
-    public class UnitOfWork:IUnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
-        public IRepository<Category> categoryRepository { get; private set; }
-        public UnitOfWork()
+        public ICategoryRepository categoryRepository { get; private set; }
+        public UnitOfWork(ApplicationDB dbContext)
         {
-            categoryRepository = new Reoosito
+            categoryRepository = new CategoryRepository(dbContext);
         }
     }
 }

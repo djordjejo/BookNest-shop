@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace Data.Repository.IRepository
 {
-    public interface IUnitOfWork
+    public interface ICategoryRepository : IRepository<Category>
     {
-        public ICategoryRepository categoryRepository { get; }
-
+        public void Update(Category category);
 
     }
 }

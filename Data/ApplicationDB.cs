@@ -10,13 +10,12 @@ namespace Data
 {
     public class ApplicationDB : DbContext
     {
-        private readonly DbContext dbContext;
-        private readonly DbContextOptions<ApplicationDB> dbContext1;
+        private readonly DbContextOptions<ApplicationDB> dbContext;
 
         public DbSet<Category> Categories { get; set; }
         public ApplicationDB(DbContextOptions <ApplicationDB> dbContext):base(dbContext)
         {
-            dbContext1 = dbContext;
+            dbContext = dbContext;
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -45,9 +44,6 @@ namespace Data
 
         }
 
-        internal DbSet<T>? Entry<T>()
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }
