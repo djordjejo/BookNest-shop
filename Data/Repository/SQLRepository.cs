@@ -29,19 +29,35 @@ namespace Data.Repository
 
         }
 
-        public T Get(Expression<Func<T, bool>>? filter = null)
+        public T Get(Expression<Func<T, bool>>? filter = null, string? includeproperties = null)
         {
             IQueryable<T> query = dbSet;
             if (filter != null)
                 query = query.Where(filter);
+
+            if (!string.IsNullOrEmpty(includeproperties))
+            {
+                foreach (var input in includeproperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(input);
+                }
+            }
             return query.FirstOrDefault();
         }
 
-        public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter = null)
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter = null, string? includeproperties = null)
         {
             IQueryable<T> query = dbSet;
-            if (filter != null)
-                query = query.Where(filter);
+            if (filter != null) query = query.Where(filter);
+
+            if (!string.IsNullOrEmpty(includeproperties))
+            {
+                foreach (var input in includeproperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(input);
+                }
+            }
+
             return query.ToList();
         }
 

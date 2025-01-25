@@ -10,7 +10,6 @@ function loadDataTable() {
         "columns": [
             { data: 'name', "width": "40%" },
             { data: 'description', "width": "40%" },
-          
             {
                 data: 'id',
                 "render": function (data) {
@@ -18,7 +17,6 @@ function loadDataTable() {
                      <a href="/admin/category/Update?id=${data}" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i> Edit</a>               
                      <a onClick=Delete('/admin/category/delete/?id=${data}') class="btn btn-danger mx-2"> <i class="bi bi-trash-fill"></i> Delete</a>
                     </div>`
-                   
                 },
                 "width": "20%"
             }
@@ -28,7 +26,6 @@ function loadDataTable() {
 
 
 function Delete(url) {
-    console.log(url);
     Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",

@@ -36,12 +36,12 @@ namespace BookNest.Areas.Admin.Controllers
             return RedirectToAction("DisplayCategories");
         }
 
-
         public IActionResult Update(Guid? id)
         {
             var element = unitOfWork.categoryRepository.Get(x => x.Id.Equals(id));
             return View(element);
         }
+
         [HttpPost]
         public IActionResult Update (Category? category)
         {
@@ -56,26 +56,7 @@ namespace BookNest.Areas.Admin.Controllers
             return View();
 
         }
-        [HttpDelete]
-
-        [HttpDelete]
-        public IActionResult Delete(Guid? id)
-        {
-            if (id == Guid.Empty)
-            {
-                return BadRequest();
-            }
-            var element = unitOfWork.categoryRepository.Get(x => x.Id.Equals(id));
-            if (element != null)
-            
-
-                unitOfWork.categoryRepository.Remove(element);
-                return View("DisplayCategories");
-            
-         
-        }
-
-
+        
         #region
         [HttpGet]
         public IActionResult GetAll()
@@ -83,22 +64,23 @@ namespace BookNest.Areas.Admin.Controllers
             var categories = unitOfWork.categoryRepository.GetAll().ToList();
             return Json( new { data = categories });
         }
-        //[HttpDelete]
-        //public IActionResult Delete(Guid? id)
-        //{
-        //    if (id == Guid.Empty)
-        //    {
-        //        return Json(new { error = true, message = "Unable to delete" });
-        //    }
-        //    var element = unitOfWork.categoryRepository.Get(x => x.Id.Equals(id));
-        //    if (element != null)
-        //    {
+        [HttpPost]
+        [ActionName("DeleteCategory")]
+        public IActionResult DeleteCategory(Guid? id)
+        {
+            if (id == Guid.Empty)
+            {
+                return Json(new { error = true, message = "Unable to delete" });
+            }
+            var element = unitOfWork.categoryRepository.Get(x => x.Id.Equals(id));
+            if (element != null)
+            {
 
-        //        unitOfWork.categoryRepository.Remove(element);
-        //        return Json(new { success = true, message = "Delete Successful" });
-        //    }
-        //    return View("DisplayCategories");
-        //}
+                unitOfWork.categoryRepository.Remove(element);
+                return Json(new { success = true, message = "Delete Successful" });
+            }
+            return View("DisplayCategories");
+        }
         #endregion
 
     }

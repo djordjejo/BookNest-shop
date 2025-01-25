@@ -1,0 +1,30 @@
+﻿@using Models
+@model List<Product>
+ <div class="card-body p-4">
+    <div class="row pb-3">
+        <div class="col-6">
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="Product" asp-action="Create" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i>  Create New Category
+            </a>
+        </div>
+    </div>
+    <table id="tblData" class="table table-bordered table-striped" style="width:100%">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>ISBN</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Category</th>
+                <th>Proba</th>
+            </tr>
+        </thead>
+    </table> 
+
+    @section Scripts
+    {
+            <script src="~/js/product.js"></script>
+    }
