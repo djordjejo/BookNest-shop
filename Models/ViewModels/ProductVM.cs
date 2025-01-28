@@ -11,8 +11,8 @@ namespace Models.ViewModels
 {
    public class ProductVM
     {
-        Product product { get; set; }
+      public Product product { get; set; }
         [ValidateNever]
-        IEnumerable<SelectListItem> CategoryList { get; set; }
+      public IEnumerable<SelectListItem> CategoryList { get; set; }
     }
 }

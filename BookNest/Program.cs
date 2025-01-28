@@ -22,7 +22,7 @@ if (!app.Environment.IsDevelopment())
 }
 
 
-
+app.UseWebSockets();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.MapRazorPages();

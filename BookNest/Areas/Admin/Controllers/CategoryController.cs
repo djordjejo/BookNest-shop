@@ -57,7 +57,7 @@ namespace BookNest.Areas.Admin.Controllers
 
         }
         
-        #region
+        #region CATEOGRY API CALLS
         [HttpGet]
         public IActionResult GetAll()
         {

@@ -1,6 +1,8 @@
 ﻿using Data.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Models;
+using Models.ViewModels;
 
 namespace BookNest.Areas.Admin.Controllers
 {
@@ -9,10 +11,12 @@ namespace BookNest.Areas.Admin.Controllers
     public class ProductController : Controller
     {
         private readonly IUnitOfWork unitOfWork;
+        private readonly IWebHostEnvironment webHostEnvironment;
 
-        public ProductController(IUnitOfWork unitOfWork)
+        public ProductController(IUnitOfWork unitOfWork,IWebHostEnvironment webHostEnvironment )
         {
             this.unitOfWork = unitOfWork;
+            this.webHostEnvironment = webHostEnvironment;
         }
         public IActionResult DisplayProducts()
         {
@@ -23,49 +27,105 @@ namespace BookNest.Areas.Admin.Controllers
         
         public IActionResult Create()
         {
-            return View();  
+            ProductVM productVM = new ProductVM()
+            {
+                product = new Product(),
+                CategoryList = unitOfWork.categoryRepository.GetAll().Select(x => new SelectListItem
+                {
+                    Text = x.Name,
+                    Value = x.Id.ToString()
+                })
+            };
+            return View(productVM);
         }
         [HttpPost]
-        public IActionResult Create(Product product)
+        public IActionResult Create(ProductVM productVM, IFormFile? file)
         {
             if (ModelState.IsValid)
             {
-                if (product == null)
+                if (productVM.product == null)
                 {
                     return NotFound();
                 }
                 else
                 {
-                    unitOfWork.productRepository.Add(product);
+                    string wwwRootPath = webHostEnvironment.WebRootPath;
+                    if (file != null)
+                    {
+                        string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                        string productPath = Path.Combine(wwwRootPath, @"images\product");
+
+                        using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
+                        {
+                            file.CopyTo(fileStream);
+                        }
+                        productVM.product.ImageUrl = @"\images\product\" + fileName;
+                    }
+                    unitOfWork.productRepository.Add(productVM.product);
                     return RedirectToAction("DisplayProducts");
                 }
+
+            } else
+            {
+                 productVM = new ProductVM()
+                {
+                    product = new Product(),
+                    CategoryList = unitOfWork.categoryRepository.GetAll().Select(x => new SelectListItem
+                    {
+                        Text = x.Name,
+                        Value = x.Id.ToString()
+                    })
+                };
+                return View(productVM);
+
             }
-           
-            return View();
+
         }
         public IActionResult Edit(Guid? id)
         {
             var element = unitOfWork.productRepository.Get(x => x.Id.Equals(id), includeproperties: "Category");
+            if (element == null) return NotFound();
 
-            if (element == null)
-                return NotFound();
-
-            return View(element);
+            ProductVM productVM = new ProductVM
+            {
+                CategoryList = unitOfWork.categoryRepository.GetAll().Select(x => new SelectListItem
+                {
+                    Text = x.Name,
+                    Value = x.Id.ToString()
+                }),
+                product = element
+            };
+            return View(productVM);
         }
 
         [HttpPost]
-        public IActionResult Edit(Product? product)
+        public IActionResult Edit(ProductVM? productVM, IFormFile? file = null)
         {
-            if (product == null)
+            if (productVM.product == null)
                 return NotFound();
 
             if (ModelState.IsValid)
             {
-                unitOfWork.productRepository.Update(product);
+                if (productVM.product.ImageUrl == null)
+                {
+                    if (file != null)
+                    {
+                        var webRoothPath = webHostEnvironment.WebRootPath;
+                        var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                        var productPath = Path.Combine(webRoothPath, @"images/product/");
+
+                        using (FileStream fs = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
+                        {
+                            file.CopyTo(fs);
+                        }
+                        productVM.product.ImageUrl = @"\images\product\" + fileName;
+                    }
+                   
+                }
+                unitOfWork.productRepository.Update(productVM.product);
                 return RedirectToAction("DisplayProducts");
             }
-            return View();
-
+            return View(productVM);
         }
 
 

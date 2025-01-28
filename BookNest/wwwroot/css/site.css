@@ -616,7 +616,7 @@ progress {
 }
 
     .blockquote-footer::before {
-        content: "��";
+        content: "��";
     }
 
 .img-fluid {
@@ -5892,7 +5892,18 @@ textarea.form-control-lg {
     overflow-y: auto;
     outline: 0;
 }
+.fixed-card {
+    height: 480px; /* Postavi visinu */
+    width: 100%; /* Podesi širinu prema koloni */
+    display: flex; /* Osiguraj ravnomerno poravnanje sadržaja */
+    flex-direction: column; /* Postavi sadržaj vertikalno */
+    justify-content: space-between; /* Raspodeli sadržaj */
+}
 
+.fixed-img {
+    max-height: 200px; /* Postavi maksimalnu visinu slike */
+    object-fit: cover; /* Obreži sliku ako je veća od prostora */
+}
 .modal-dialog {
     position: relative;
     width: auto;
