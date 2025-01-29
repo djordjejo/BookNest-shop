@@ -1,13 +1,15 @@
 ﻿using Data.Repository.IRepository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Models;
 using Models.ViewModels;
+using Utility;
 
 namespace BookNest.Areas.Admin.Controllers
 {
     [Area("Admin")]
-
+    [Authorize(Roles = SD.AdminRole)]
     public class ProductController : Controller
     {
         private readonly IUnitOfWork unitOfWork;

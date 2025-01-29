@@ -1,18 +1,20 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace Data
 {
-    public class ApplicationDB : DbContext
+    public class ApplicationDB : IdentityDbContext
     {
         private readonly DbContextOptions<ApplicationDB> dbContext;
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<ApplicationUser> User { get; set; }
 
 
         public ApplicationDB(DbContextOptions <ApplicationDB> dbContext):base(dbContext)
