@@ -15,6 +15,7 @@ namespace Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ApplicationUser> User { get; set; }
+        public DbSet<Company> Companies{ get; set; }
 
 
         public ApplicationDB(DbContextOptions <ApplicationDB> dbContext):base(dbContext)
@@ -24,6 +25,8 @@ namespace Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            // CATEGORY
             
             modelBuilder.Entity<Category>().HasData(
                 new Category {
@@ -43,6 +46,9 @@ namespace Data
                     Name = "Trejler",
                     Description = "Knjige u kojima je prica neizvesna"
                 });
+
+
+            //PRODUCTS
 
             modelBuilder.Entity<Product>().HasData(
             new Product
@@ -105,6 +111,39 @@ namespace Data
                 Price = 23,
                 CategoryId = Guid.Parse("8ec37b41-9c77-4311-8463-ac8d8820cb19")
             });
+
+
+            // COMPANY
+            modelBuilder.Entity<Company>().HasData(
+           new Company
+           {
+               Id = Guid.Parse("b3a1f5d2-3d5e-4d76-a2a8-bb8e4ef4e0f4"),
+               Name = "Tech Corp",
+               StreetAdress = "123 Tech Street",
+               City = "New York",
+               PhoneNumber = 123456789,
+               PostalCode = 10001
+           },
+           new Company
+           {
+               Id = Guid.Parse("5e6a7c89-4b21-4f9e-9215-f7d3e8a9c3c8"),
+               Name = "InnoSoft",
+               StreetAdress = "456 Innovation Ave",
+               City = "San Francisco",
+               PhoneNumber = 987654321,
+               PostalCode = 94101
+           },
+           new Company
+           {
+               Id =Guid.Parse("9d8b7c6a-1e34-4c57-8b2a-f2a1d4e6b5f3"),
+               Name = "DataWorks",
+               StreetAdress = "789 Data Blvd",
+               City = "Chicago",
+               PhoneNumber = 555666777,
+               PostalCode = 60601
+           }
+       );
+
         }
 
 

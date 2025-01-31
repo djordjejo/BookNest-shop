@@ -13,10 +13,12 @@ namespace Data.Repository
     {
         public ICategoryRepository categoryRepository { get; private set; }
         public IProductRepository productRepository { get; private set; }
+        public ICompanyRepository companyRepository{ get; private set; }
         public UnitOfWork(ApplicationDB dbContext)
         {
             categoryRepository = new CategoryRepository(dbContext);
             productRepository = new ProductRepository(dbContext);
+            companyRepository = new CompanyRepository(dbContext);
         }
     }
 }
