@@ -12,6 +12,8 @@ namespace Data.Repository.IRepository
         public ICategoryRepository categoryRepository { get; }
         public IProductRepository productRepository { get; }
         public ICompanyRepository companyRepository { get; }
+        public IShoppingCardRepository shoppingCardRepository { get; }
+        public void Save();
 
     }
 }

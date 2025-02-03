@@ -37,6 +37,7 @@ namespace BookNest.Areas.Admin.Controllers
             }
 
             unitOfWork.categoryRepository.Add(category);
+            unitOfWork.Save();
             return RedirectToAction("DisplayCategories");
         }
 
@@ -55,6 +56,7 @@ namespace BookNest.Areas.Admin.Controllers
                 if (category == null) return BadRequest();
 
                 unitOfWork.categoryRepository.Update(category);
+                unitOfWork.Save();
                 return RedirectToAction("DisplayCategories");
             }
             return View();
@@ -81,6 +83,7 @@ namespace BookNest.Areas.Admin.Controllers
             {
 
                 unitOfWork.categoryRepository.Remove(element);
+                unitOfWork.Save();
                 return Json(new { success = true, message = "Delete Successful" });
             }
             return View("DisplayCategories");

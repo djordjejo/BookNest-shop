@@ -16,6 +16,7 @@ namespace Data
         public DbSet<Product> Products { get; set; }
         public DbSet<ApplicationUser> User { get; set; }
         public DbSet<Company> Companies{ get; set; }
+        public DbSet<ShoppingCard> ShoppingCards{ get; set; }
 
 
         public ApplicationDB(DbContextOptions <ApplicationDB> dbContext):base(dbContext)

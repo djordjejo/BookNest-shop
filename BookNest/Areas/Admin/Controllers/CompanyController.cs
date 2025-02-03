@@ -1,4 +1,5 @@
-﻿using Data.Repository.IRepository;
+﻿using Data.Repository;
+using Data.Repository.IRepository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -39,6 +40,7 @@ namespace BookNest.Areas.Admin.Controllers
             }
 
             unitOfWork.companyRepository.Remove(elementToDelete);
+            unitOfWork.Save();
 
 
             return Json(new { success = true, message = "Company deleted successfully." });
@@ -54,13 +56,12 @@ namespace BookNest.Areas.Admin.Controllers
 
                 if (elementToUpdate == null)
                 {
-                    return NotFound(); // Ako ne postoji kompanija sa tim ID-jem
+                    return NotFound(); 
                 }
 
                 return View(elementToUpdate);
             }
 
-            // Ako nema ID-a, kreira se novi objekat Company
             return View(new Company());
         }
 
@@ -72,12 +73,14 @@ namespace BookNest.Areas.Admin.Controllers
                 if (company.Id == Guid.Empty)
                 {
                     unitOfWork.companyRepository.Add(company);
-                    TempData["Success"] = "Item is successful added"; 
+                    unitOfWork.Save();
+                   TempData["Success"] = "Item is successful added"; 
                     return RedirectToAction("DisplayCompanies");
                 }
                 else
                 {
                     unitOfWork.companyRepository.Update(company);
+                    unitOfWork.Save();
                     TempData["Success"] = "Item is successful updated";
                     return RedirectToAction("DisplayCompanies");
                 }

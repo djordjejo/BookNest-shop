@@ -64,6 +64,7 @@ namespace BookNest.Areas.Admin.Controllers
                         productVM.product.ImageUrl = @"\images\product\" + fileName;
                     }
                     unitOfWork.productRepository.Add(productVM.product);
+                    unitOfWork.Save();
                     return RedirectToAction("DisplayProducts");
                 }
 
@@ -125,6 +126,7 @@ namespace BookNest.Areas.Admin.Controllers
                    
                 }
                 unitOfWork.productRepository.Update(productVM.product);
+                unitOfWork.Save();
                 return RedirectToAction("DisplayProducts");
             }
             return View(productVM);
@@ -147,6 +149,7 @@ namespace BookNest.Areas.Admin.Controllers
 
             }
             unitOfWork.productRepository.Remove(elementToDelete);
+            unitOfWork.Save();
             return Json(new { success = true, message = "Successful removed product" });
         }
         #endregion

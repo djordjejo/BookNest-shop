@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace Data.Repository.IRepository
 {
-    public interface ICompanyRepository : IRepository<Company>
+  public interface IUserRepository : IRepository<ApplicationUser>
     {
-        void Update(Company company);
-
-
+        public void Update(ApplicationUser applicationUser);
     }
 }

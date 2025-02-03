@@ -21,7 +21,6 @@ namespace Data.Repository
         public void Update(Product product)
         {
             applicationDB.Update(product);
-            applicationDB.SaveChanges();
         }
     }
 }

@@ -8,18 +8,18 @@ using System.Threading.Tasks;
 
 namespace Data.Repository
 {
-    public class CompanyRepository : SQLRepository<Company>, ICompanyRepository
+    public class ApplicationUserRepository : SQLRepository<ApplicationUser>, IUserRepository
     {
         private readonly ApplicationDB dbContext;
 
-        public CompanyRepository(ApplicationDB dbContext) : base(dbContext)
+        public ApplicationUserRepository(ApplicationDB dbContext) : base (dbContext)
         {
             this.dbContext = dbContext;
         }
 
-        public void Update(Company company)
+        public void Update(ApplicationUser applicationUser)
         {
-            dbContext.Update(company);
+            throw new NotImplementedException();
         }
     }
 }

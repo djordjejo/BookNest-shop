@@ -25,14 +25,22 @@ namespace Data.Repository
         public void Add(T entity)
         {
             dbSet.Add(entity);
-            dbContext.SaveChanges();
 
         }
 
-        public T Get(Expression<Func<T, bool>>? filter = null, string? includeproperties = null)
+        public T Get(Expression<Func<T, bool>>? filter = null, string? includeproperties = null, bool tracked = false)
         {
-            IQueryable<T> query = dbSet;
-            if (filter != null)
+            IQueryable<T> query;
+
+            if (tracked)
+            {
+                query = dbSet;
+            }
+            else
+            {
+                query = dbSet.AsNoTracking();
+            }
+          
                 query = query.Where(filter);
 
             if (!string.IsNullOrEmpty(includeproperties))
@@ -64,7 +72,6 @@ namespace Data.Repository
         public void Remove(T entity)
         {
             dbSet.Remove(entity);
-            dbContext.SaveChanges();
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Data.Repository.IRepository
 {
     public interface IRepository<T> 
     {
-        public T Get(Expression<Func<T, bool>>? filter = null, string? includeproperties = null);
+        public T Get(Expression<Func<T, bool>>? filter = null, string? includeproperties = null, bool tracked = false);
         public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter = null, string includeproperties = null);
         public void Remove(T entity);
         public void Add(T entity);

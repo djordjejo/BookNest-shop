@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace Data.Repository.IRepository
 {
-    public interface ICompanyRepository : IRepository<Company>
-    {
-        void Update(Company company);
-
+  public interface IShoppingCardRepository : IRepository<ShoppingCard>
+  {
+      public void Update(ShoppingCard shopping);
 
     }
 }
