@@ -19,7 +19,10 @@ namespace Data.Repository
         public ICompanyRepository companyRepository{ get; private set; }
         public IShoppingCardRepository shoppingCardRepository{ get; private set; }
         public IUserRepository userRepository{ get; private set; }
-        
+        public IOrderDetailRepository orderDetailRepository { get; private set; }
+        public IOrderHeaderRepository headerRepository{ get; private set; }
+
+
         public UnitOfWork(ApplicationDB dbContext)
         {
             categoryRepository = new CategoryRepository(dbContext);
@@ -27,6 +30,8 @@ namespace Data.Repository
             companyRepository = new CompanyRepository(dbContext);
             shoppingCardRepository = new ShoppingCardRepository(dbContext);
             userRepository = new ApplicationUserRepository(dbContext);
+            orderDetailRepository = new OrderDetailRepository(dbContext);
+            headerRepository = new OrderHeaderRepository(dbContext);
             this.dbContext = dbContext;
         }
 

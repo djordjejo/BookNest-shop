@@ -24,8 +24,6 @@ namespace Models
         [ForeignKey("userId")]
         [ValidateNever]
         public ApplicationUser applicationUser { get; set; }
-        [NotMapped]
-        public double price { get; set; }
 
     }
 }
